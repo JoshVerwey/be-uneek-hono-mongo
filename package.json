@@ -13,7 +13,9 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "cloudflare": "^3.2.0",
     "hono": "^3.3.4",
-    "mongoose": "^7.4.1"
+    "mongoose": "^7.4.1",
+    "wrangler": "^3.57.0"
   }
 }

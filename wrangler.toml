@@ -1,0 +1,2 @@
+name = 'be-uneek-hono-mongo'
+main = 'dist/index.mjs'

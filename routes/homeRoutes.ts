@@ -5,12 +5,12 @@ import { isAdmin, protect } from "../middlewares";
 const hono = new Hono();
 
 // Get All Homes
-hono.get("/getHome", protect, isAdmin, (c) => home.getHome(c));
+hono.get("/getHome", (c) => home.getHome(c));
 
 // Create Home
-hono.post("/createHome", (c) => home.createHome(c));
+hono.post("/createHome", protect, isAdmin, (c) => home.createHome(c));
 
 // Update Home
-hono.put("/updateHome", (c) => home.updateHome(c));
+hono.put("/updateHome", protect, isAdmin, (c) => home.updateHome(c));
 
 export default hono;

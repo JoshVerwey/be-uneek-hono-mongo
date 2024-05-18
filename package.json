@@ -3,8 +3,8 @@
   "module": "server.ts",
   "type": "module",
   "scripts": {
-    "start": "bun run server.ts",
-    "dev": "bun --hot run server.ts"
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy --minify src/index.ts"
   },
   "devDependencies": {
     "bun-types": "latest"
@@ -13,6 +13,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@cloudflare/workers-types": "^4.20240512.0",
     "cloudflare": "^3.2.0",
     "hono": "^3.3.4",
     "mongoose": "^7.4.1",

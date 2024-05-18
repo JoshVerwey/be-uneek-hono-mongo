@@ -1,2 +1,4 @@
 name = 'be-uneek-hono-mongo'
-main = 'dist/index.mjs'
+
+compatibility_date = "2024-04-01"
+compatibility_flags = ['nodejs_compat']

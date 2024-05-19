@@ -11,7 +11,7 @@ import { errorHandler, notFound } from "./middlewares";
 const app = new Hono().basePath("/api/v1");
 
 // Config MongoDB
-connectDB();
+//connectDB();
 
 // Initialize middlewares
 app.use("*", logger(), prettyJSON());

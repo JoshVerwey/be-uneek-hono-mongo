@@ -5,7 +5,6 @@ import { genToken } from "../utils";
 /**
  * @api {get} /users Get All Users
  * @apiGroup Users
- * @access Private
  */
 export const getUsers = async (c: Context) => {
   const users = await User.find();
@@ -22,36 +21,43 @@ export const createUser = async (c: Context) => {
   const { name, email, password } = await c.req.json();
 
   // Check for existing user
-  const userExists = await User.findOne({ email });
-  if (userExists) {
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
     c.status(400);
     throw new Error("User already exists");
   }
 
-  const user = await User.create({
-    name,
-    email,
-    password,
-  });
+  try {
+    const user = await User.create({
+      name,
+      email,
+      password,
+    });
 
-  if (!user) {
-    c.status(400);
-    throw new Error("Invalid user data");
+    if (!user) {
+      c.status(400);
+      throw new Error("Invalid user data");
+    }
+    const token = await genToken(user._id.toString());
+
+    return c.json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
+      token,
+      message: "User created successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    return c.json({
+      success: false,
+      message: "User not created, try again later.",
+    });
   }
-
-  const token = await genToken(user._id.toString());
-
-  return c.json({
-    success: true,
-    data: {
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    },
-    token,
-    message: "User created successfully",
-  });
 };
 
 /**

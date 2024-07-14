@@ -27,8 +27,7 @@ export const createHome = async (c: Context): Promise<any> => {
   // Check for existing user
   const homeExists = await Home.findOne({ id: data.id });
   if (homeExists) {
-    const res = await updateHome(c);
-    return res;
+    return updateHome(c);
   }
 
   const response = await Home.create(data);
@@ -57,6 +56,7 @@ export const createHome = async (c: Context): Promise<any> => {
 export const updateHome = async (c: Context): Promise<any> => {
   const data: IHome = await c.req.json();
 
+  // Optimize the query by using findOneAndUpdate with the new option set to true
   const response = await Home.findOneAndUpdate({ id: data.id }, data, {
     new: true,
   });
